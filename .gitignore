@@ -1,0 +1,38 @@
+# 依赖
+node_modules/
+**/node_modules/
+
+# Python
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 数据库
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+backend/data/
+
+# 环境变量（敏感）
+.env
+**/.env
+!**/.env.example
+
+# 日志
+*.log
+logs/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# 上传文件
+uploads/
