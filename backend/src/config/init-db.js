@@ -51,6 +51,7 @@ const createTables = async () => {
       source VARCHAR(50),
       posted_date DATE,
       deadline DATE,
+      application_url VARCHAR(500),
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);

@@ -14,6 +14,7 @@ const seedJobs = [
     source: '官网',
     posted_date: '2026-10-01',
     deadline: '2026-10-31',
+    application_url: 'https://jobs.bytedance.com/campus/internship',
   },
   {
     title: '前端开发实习生',
@@ -27,6 +28,7 @@ const seedJobs = [
     source: '官网',
     posted_date: '2026-10-02',
     deadline: '2026-10-30',
+    application_url: 'https://join.qq.com',
   },
   {
     title: '后端开发实习生',
@@ -40,6 +42,7 @@ const seedJobs = [
     source: '官网',
     posted_date: '2026-10-03',
     deadline: '2026-11-15',
+    application_url: 'https://campus.alibaba.com',
   },
   {
     title: '全栈开发实习生',
@@ -53,6 +56,7 @@ const seedJobs = [
     source: '内推',
     posted_date: '2026-10-04',
     deadline: '2026-10-25',
+    application_url: 'https://campus.meituan.com',
   },
   {
     title: '算法工程师实习生',
@@ -66,6 +70,7 @@ const seedJobs = [
     source: '官网',
     posted_date: '2026-10-05',
     deadline: '2026-11-01',
+    application_url: 'https://talent.baidu.com/jobs/intern',
   },
   {
     title: '产品经理实习生',
@@ -79,6 +84,7 @@ const seedJobs = [
     source: '官网',
     posted_date: '2026-10-01',
     deadline: '2026-10-20',
+    application_url: 'https://job.xiaohongshu.com',
   },
 ];
 
@@ -96,8 +102,8 @@ const seedData = async () => {
   // 插入示例岗位
   for (const job of seedJobs) {
     prepare(
-      `INSERT INTO jobs (title, company, location, salary, type, requirements, responsibilities, tags, source, posted_date, deadline)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO jobs (title, company, location, salary, type, requirements, responsibilities, tags, source, posted_date, deadline, application_url)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     ).run(
       job.title,
       job.company,
@@ -109,7 +115,8 @@ const seedData = async () => {
       JSON.stringify(job.tags),
       job.source,
       job.posted_date,
-      job.deadline
+      job.deadline,
+      job.application_url
     );
   }
 

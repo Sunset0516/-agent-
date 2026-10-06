@@ -40,6 +40,7 @@ const runMigrations = () => {
     { column: 'work_hours', sql: 'ALTER TABLE jobs ADD COLUMN work_hours VARCHAR(50);' },
     { column: 'start_date', sql: 'ALTER TABLE jobs ADD COLUMN start_date VARCHAR(50);' },
     { column: 'category', sql: 'ALTER TABLE jobs ADD COLUMN category VARCHAR(50);' },
+    { column: 'application_url', sql: 'ALTER TABLE jobs ADD COLUMN application_url VARCHAR(500);' },
   ];
   // 检查已有列
   const cols = prepare('PRAGMA table_info(jobs)').all().map(c => c.name);

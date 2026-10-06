@@ -54,15 +54,15 @@ const get = (req, res) => {
 
 // 创建岗位
 const create = (req, res) => {
-  const { title, company, location, salary, type, requirements, responsibilities, tags, source, posted_date, deadline } = req.body;
+  const { title, company, location, salary, type, requirements, responsibilities, tags, source, posted_date, deadline, application_url } = req.body;
 
   if (!title) {
     return errorResponse(res, '岗位名称不能为空', 400);
   }
 
   const result = prepare(
-    `INSERT INTO jobs (title, company, location, salary, type, requirements, responsibilities, tags, source, posted_date, deadline)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    `INSERT INTO jobs (title, company, location, salary, type, requirements, responsibilities, tags, source, posted_date, deadline, application_url)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).run(
     title,
     company || '',
@@ -74,7 +74,8 @@ const create = (req, res) => {
     tags ? JSON.stringify(tags) : '[]',
     source || '手动录入',
     posted_date || null,
-    deadline || null
+    deadline || null,
+    application_url || ''
   );
 
   return successResponse(res, { id: result.lastInsertRowid }, '岗位添加成功', 201);
@@ -83,7 +84,7 @@ const create = (req, res) => {
 // 更新岗位
 const update = (req, res) => {
   const { id } = req.params;
-  const { title, company, location, salary, type, requirements, responsibilities, tags, posted_date, deadline } = req.body;
+  const { title, company, location, salary, type, requirements, responsibilities, tags, posted_date, deadline, application_url } = req.body;
 
   const job = prepare('SELECT id FROM jobs WHERE id = ?').get(id);
   if (!job) {
@@ -101,14 +102,15 @@ const update = (req, res) => {
       responsibilities = COALESCE(?, responsibilities),
       tags = COALESCE(?, tags),
       posted_date = COALESCE(?, posted_date),
-      deadline = COALESCE(?, deadline)
+      deadline = COALESCE(?, deadline),
+      application_url = COALESCE(?, application_url)
     WHERE id = ?`
   ).run(
     title, company, location, salary, type,
     requirements ? JSON.stringify(requirements) : null,
     responsibilities,
     tags ? JSON.stringify(tags) : null,
-    posted_date, deadline, id
+    posted_date, deadline, application_url, id
   );
 
   return successResponse(res, null, '更新成功');

@@ -764,11 +764,21 @@ class App {
             </div>
           ` : ''}
           ${missingSkills.length > 0 ? `
-            <div>
+            <div style="margin-bottom: 10px;">
               <span style="font-size: 13px; color: var(--danger);">✗ 待提升：</span>
               ${missingSkills.map(s => `<span class="tag tag-danger">${s}</span>`).join('')}
             </div>
           ` : ''}
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+            ${job.application_url ? `
+              <a href="${job.application_url}" target="_blank" rel="noopener" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+                🔗 立即投递
+              </a>
+            ` : `
+              <span class="btn btn-secondary" style="opacity: 0.6; cursor: not-allowed;">暂无投递链接</span>
+            `}
+            <button class="btn btn-secondary" onclick="app.trackJob(${job.id})">📝 记录投递</button>
+          </div>
         </div>
       `;
     };
@@ -1281,6 +1291,21 @@ class App {
         `).join('')}
       </div>
     `;
+  }
+
+  // 记录投递
+  async trackJob(jobId) {
+    try {
+      const result = await api.application.create({ job_id: jobId, status: 'pending' });
+      if (result.success) {
+        alert('✅ 投递记录已添加，可在"投递跟踪"页面查看');
+        this.navigate('applications');
+      } else {
+        alert(result.message || '记录失败');
+      }
+    } catch (e) {
+      alert('记录投递失败: ' + e.message);
+    }
   }
 }
 
